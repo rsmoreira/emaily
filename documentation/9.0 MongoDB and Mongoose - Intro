@@ -1,0 +1,19 @@
+MongoDB
+
+	In MongoDB we have Collections and each Collection has its Records. 
+
+		In relational databases...
+			** Collection = Table 
+			** Record = Object
+
+	MongoDB is a schemeless database. That means, each object into a Collection can have its own list of attributes. It is refered as a Non-Relational database as well. 
+
+	Mongoose.js is Javascript library to help us TO REPRESENT THE MONGO DB STRUCTURE OF DATA (Collections and Records). 
+
+	Mongoose / Model Class
+
+		In Mongoose, a Model Class is a Javascript object used to represent an entire MongoDB Collection. 
+
+	Mongoose / Model Instance
+
+		In Mongoose, a Model Instance is a Javascript object used to represent each MongoDB Record.

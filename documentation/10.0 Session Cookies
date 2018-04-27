@@ -1,0 +1,87 @@
+Sessio Cookies
+
+A Session Cookie will help to keep us authenticated into the Application. So you won't need to perform an authentication every single request made from the front end to the back end. 
+
+To do that, we will be using the Cookie-session library. 
+
+https://www.npmjs.com/package/cookie-session
+
+With this library you can wire up the use of the Session Cookies into your app (into the express), so after you already have authenticated, through any authentication mode, this middleware will intercept the authentication callback and inject its data into your application cookies. 
+
+Remember, at this point, you already must have, in our case, your Passport and Google Strategy configured and its callback functions as well.
+
+So lets start:
+
+	Installing
+
+		First thing you must to do is to install, so open your Terminal and from the application root path, execute the following command:
+
+			$ npm install --save cookie-session
+
+	Configuring Passport to serialize and deserialize the cookie data
+
+		Configuring passport to treat the Cookie serialization and deserialization.
+
+		THESE PIECE OF CODE IS WHAT PASSPORT USES TO ADD DATA INTO THE COOKIE!
+
+		The 'user' is the retrieved/authenticated user that we have work with on our GoogleStrategy callback function.
+
+		So, into your passport.js file, add the following:
+
+			passport.serializeUser((user, done) => {
+			    // This user.id, is the id generated on the Users Collection, on MongoDB.
+			    // It isn't the profile.id.
+			    done(null, user.id);
+			});
+
+			passport.deserializeUser((id, done) => {
+			    User.findById(id)
+			        .then(user => {
+			            done(null, user);
+			        });
+			});
+
+	Adding the session-cookie to your app
+
+		From index.js add the following code
+
+			// import cookie-session and passport
+			const cookieSession = require('cookie-session');
+			const passport = require('passport');
+
+			// configure the cookie-session attributes into your app (after 'const app = express()')
+			app.use(
+			    cookieSession({
+			        maxAge: 30 * 24 * 60 * 60 * 1000,
+			        keys: [keys.cookieKey]
+			    })
+			);
+
+			// configure passport to manage these session data 
+			app.use(passport.initialize());
+			app.use(passport.session());
+
+	DONE
+
+Take a look that when you are using 'app.use', means that you are injecting some funtion as a 'middleware' into your application. In other words, your are adding an 'interceptor', in this case, that will take care of your session cookies data.
+
+
+
+------------------------------------
+------------------------------------
+>> cookie-session VS express-session 
+
+COOKIE-SESSION
+
+	In this application, we are using cookie-session, because we just need to keep the user-id into the cookie. It has only 4KB of capacity and it doesn't manage the session storage. 
+
+	The cookie IS the session.
+
+	Cookie-session is a simple / lightweight cookie-based (cookie is the only storage engine supported: all the session info is stored on the client, in a cookie) session implementation.
+
+EXPRESS-SESSION
+	(https://www.npmjs.com/package/express-session)
+
+	In a real world is recommended to use the Express-session, because it gives access, and manage, the Express Session Storage. So, you will be able to hold any kind of data there. You won't be limited to 4KB as Cookie-Session is.
+
+	Basically, express-session is more abstract, it supports different session stores (like files, DB, cache and whatnot).

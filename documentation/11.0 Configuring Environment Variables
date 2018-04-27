@@ -1,0 +1,29 @@
+Configuring Environment Variables
+
+The Environment Variables is used to config your keys on production deployment. That means, you also need to configure this keys at your Heroku deployment area (of your app).
+
+Take a look at the files:
+	/config/keys.js
+	/config/prd.js
+
+	On prd.js, we are getting our keys through process.env.<%KEY%>.
+
+Configuring your Heroku
+	
+	Remember, if your are using another Deployment Application, it must be done there.
+
+	> Go to your Heroku 
+	
+	> Open your application on Heroku
+	
+	> Go to 'Settings'
+
+		On 'Config Variables' click on 'Reveal Config Vars'.
+
+		Then add your keys configured on prd.js file and its values.
+
+			GOOGLE_CLIENT_ID 
+    		GOOGLE_CLIENT_SECRET
+    		MONGO_URI
+    		COOKIE_KEY 
+

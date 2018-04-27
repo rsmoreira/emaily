@@ -1,0 +1,27 @@
+Assuming that you already have NODE properly installed into your machine, create the NODE project and Install Express.
+
+1. Creating the NODE Project
+
+	> Into your command line, go to your workspace or repository path and create a new folder with a proper name
+		_:~$ mkdir %project-name%
+
+	> Access this project and create a new directory named 'server' 
+		_:~$ mkdir server
+
+	> Create your project using the NPM proper command
+
+		_:~$ npm init
+
+		After this you will be asked to do some customizations into your project, to just have the default information into your project, just hit the enter until the end. 
+
+		At the end, you will have a 'package.json' file into your project. It is used to your central hub of all your dependencies you will have into your project. 
+
+	> Install your first dependency: EXPRESS 
+
+		_:~$ npm install --save express
+
+	> To check if Express was correctly installed and saved into your package.json
+
+		_:~$ cat package.json
+
+		And look for 'express' into the 'dependencies' area. 

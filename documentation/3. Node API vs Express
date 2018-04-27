@@ -1,0 +1,15 @@
+The difference between Node and Express
+
+NODE 
+	
+	>> Javascript Runtime used to execute code outside of the Browser. <<
+
+	Traditionally, javascript was just ran inside browsers. Javascript have born to make the web sites more dinamic. Through the years, people noticied that was a good idea to have Javascript running outside the browsers. As this, born NODE.
+
+	As JAVA has its Runtime, NODE also has its Runtime and it can be installed into any computer and then you can have Javascript running outside the browser, that is, into your computer, thus as Java works. 
+
+EXPRESS
+
+	>> Library that runs in the NODE Runtime. It has helpers to make dealing with HTTP traffic easier. <<
+
+	

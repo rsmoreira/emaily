@@ -1,0 +1,11 @@
+[This is the Architecture of a greater project, into this project we will be implementing only on Back End and and the Database parts to have a Node Express Server authenticanting with OAuth].
+
+Architecture
+
+	> Front End: REACT
+
+	> Back End: Express / Node API
+
+	> Database : Mongo DB (Mongoose.js)
+
+Communication between Front End and Back End through HTTP Request (Ajax Requests) [JSON].

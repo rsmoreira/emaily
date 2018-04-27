@@ -1,0 +1,46 @@
+MongoDB Setup - Remote Deploy
+
+	[https://mlab.com]
+
+	Here are the instructions of how to have you MongoDB database remote deployed. 
+
+	Creating a New Database on MLAB
+
+		> To do that, create a new account or login at https://mlab.com. 
+
+		> Once logged in, select on 'Create new'. 
+
+			You will be sent the the wizard creation page, there you will be able to create a Cloud Provider (Amazon WS, Google Cloud Platform, Microsoft Azure) or choose a Plan Type (Sandbox - Free, Shared - 8 GB - U$15, Dedicated - $180). 
+
+		> Choose the SANDBOX 
+
+		> Select US East
+
+		> As Database Name we will configure a similar name given to the application on console.developers.google:
+
+			node-google-oauth-db
+
+			** Remenber, our porpouse at this project is just have a base project, to be used as a starter project to other projects.
+
+		> Click on Submit Order
+ 
+	Configuring your Database
+
+		> After you have created your database, at your mLab home page, you will see this database, click on it.
+
+			You will see the instructions to connect to your database, something like 
+
+
+				To connect using the mongo shell:
+					> mongo ds141474.mlab.com:41474/node-google-oauth-db -u <dbuser> -p <dbpassword>
+				
+				To connect using a driver via the standard MongoDB URI (what's this?):
+					> mongodb://<dbuser>:<dbpassword>@ds141474.mlab.com:41474/node-google-oauth-db
+
+		> Here, the first thing to do is to CREATE A NEW USER for this database
+
+			1. So, click on 'Users' and on 'Add database user'. 
+				This database user will be our admin. 
+				I've saved username and the passwork at lastpass.com. I strongly recommend you to do that.
+
+			

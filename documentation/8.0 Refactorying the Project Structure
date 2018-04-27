@@ -1,0 +1,36 @@
+Refactorying the Project Structure
+
+Here we will be just adjusting our files to update the Project Struture to seam like the struture proposed at the file 11.1 Refactorying the Project Structure.pdf.
+
+	As you have seen, the project has already been reestructured, but here we have created the files 
+
+		/routes/authRoutes.js - responsible to keep any app.get route responsible to handle Authentications. 
+
+		/services/passport.js - responsible to keep all the passport configuration, with any strategy needed.
+
+	After these code is moved, you need to adjust index.js to import them:
+
+		require('../services/passport')
+			here we just need to import the file, we do not need to assign it to a const, because we won't call any function of it.
+
+		const authRoutes = require('../routes/authRoutes');
+
+A special atention to the file /routes/authRoutes.js. There is needed to access the 'app' created into the index.js file. 
+
+Into the file /routes/authRoutes.js, all code that needs to be accessed by the 'app' must be between the curly braces of the code below:
+
+	module.exports = (app) => {
+		app.get(...);
+		app.get(...);
+
+	};
+
+Into the file index.js, after the app is already created (const app = express();) add the following code:
+
+	authRoutes(app);
+
+		It will send our just created 'app' to our 'module.exports' piece of code.
+
+We can also suppress the const authRoutes, and just call authRoutes code like this:
+
+	require('./routes/authRoutes')(app);

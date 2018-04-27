@@ -1,0 +1,25 @@
+At this point we have two remote repositories created:
+
+    The GITHUB repository
+
+    The HEROKU resository 
+
+So, we need to still sending code the the both! At least I need to do that!!!!
+
+    Before pushing your code to Github and Heroku, take care if your have added and commited your code to your local reposoty:
+        $ git status
+        $ git add *
+        $ git commit -m "commit message"
+
+    1. GITHUB
+
+        Just still doing the samething you have done so far:
+
+            $ git push
+
+    2. HEROKU
+
+        Just execute the following command to commit your code to Heroku
+
+            $ git push heroku master
+

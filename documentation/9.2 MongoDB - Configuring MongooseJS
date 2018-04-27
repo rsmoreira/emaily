@@ -1,0 +1,34 @@
+Mongoose.js
+
+Mongoose is a JS Library used to interact with MongoDB. 
+Remember that, Mongoose has the Model Class components to interact with the MongoDB Collections, and that has the Model Instances to interact with MongoDB Records. 
+
+	> Installing Mongoose
+
+		Open your terminal and from your project base path run the command below:
+
+			$ npm install --save mongoose
+
+	> Add Mongoose to your index.js
+
+		Import Mongoose
+
+			const mongoose = require('mongoose');
+
+	> Configuring Mongoose 
+
+		Configure the URI at your /config/dev.js (for Dev environment) 
+		Or at your Deployment Application under the key MONGO_URI (for Prod Environment).
+		You can get this URI at your mLab space
+
+			...
+			// Below is just an example, you will have another URI
+			mongoURI : 'mongodb://<dbuser>:<dbpassword>@ds141474.mlab.com:41474/node-google-oauth-db'
+
+			Don't forget to update the dbuser and the dbpassword with the database admin created on mLab for this database.
+
+		Into your index.js
+
+			Import the keys.js, and 
+
+			mongoose.connect(keys.mongoURI);

@@ -1,0 +1,48 @@
+[This is the flow description of a greater project, into this project we will implement just until the first step: 1. Google OAuth]
+
+With this project, an user will be able to Sign in with Google OAuth and will be able to create a survey asking feedback for any kind of topic. So, the user will be able to create a list of questions, create a list of e-mails and send this questions (the survey) to this list. Each person of this e-mail list will receive an e-mail with a link, to collect its feedback. After the feedback is filled correctly and submitted, the owner of the survey will be able to check the feedbacks and generate reports. 
+
+Below we can check each step of this process and the description of each technology used. 
+
+
+The flow and its Technologies
+
+	1. Google OAuth - "Sign in with Google"
+
+		> Express Server
+		> MongoDB
+		> PassportJS
+
+	2. User pays for e-mail credits via Stripe
+
+		> Stripe [It handles any kind of billing inside an application]
+		> MongoDB
+
+	3. User creates a new Campaign 
+
+		> React + Redux
+
+	4. User enters a list of e-mails to send the survey to
+
+		> React + Redux + Redux Form
+
+	5. We send e-mail to list of surveyees
+
+		> e-Mail Provider
+
+	6. Surveyees click on link in e-mal to provide feedback
+
+		> e-Mail Provider
+		> Express
+		> Mongo
+
+	7. We tabulate feedback
+
+		> MOngo
+
+	8. User can see report of all survey responses
+
+		> Mongo
+		> React
+		> Redux
+		

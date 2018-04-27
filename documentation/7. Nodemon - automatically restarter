@@ -1,0 +1,21 @@
+Nodemon
+
+Library used to automatically restart our application. 
+
+Installing:
+
+	$ npm install --save nodemon
+
+Configuring:
+
+	At package.json / scripts area add the dev property with nodemon command:
+
+		"scripts": {
+		    "start": "node index.js",
+		    "dev": "nodemon index.js"
+		},
+
+Starting the project with Nodemon
+
+	$ npm run dev
+

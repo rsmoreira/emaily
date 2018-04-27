@@ -1,0 +1,41 @@
+Google OAuth and Passport JS
+
+
+Before start reading this doc, please take a look at the "8.1 Google OAuth - Authentication Flow Diagram.pdf". It's very important to understand what Google OAuth and Passport JS does for us. 
+
+Believing that you already have took a look there, here we go. Ok, I will even write everything again below as well.
+
+Below, the Google OAuth Authentication Flow. 
+Take a look that PASSPORT will handle to us all the Communication between Our Back End and the Google! 
+Steps from 2 util 7. Voila! 
+
+	01. [Our Front End] 			
+		- User clicks into the "Login with Google" button
+	
+	02. [Our Back End > GOOGLE]	- PASSPORT
+		- Our server receives this request and send this request to GOOGLE (with the e-mail, obiouslly)
+	03. [GOOGLE] - PASSPORT				
+		- Google will work verifying with the user, the e-mail's owner, if he allows our application accessging its Google's data. 
+		- The user will receive an e-mail or a new tab will open into its default browser where Google will be asking if he allows our application accessing its Google information.
+	04. [GOOGLE] - PASSPORT
+		- Google will receive the use's response, checking if the user grants the permition. 
+	05. [GOOGLE > Our Back End] - PASSPORT
+		- After this grant access permition (steps 3 and 4), Google will send a Google Code with the permition to Our Back End. 
+	06. [Our Back End > GOOGLE] - PASSPORT
+		- Our Back End will receive this response and will check if it was positive. 
+		- For positive responses from Google, Our Back End will send to Google a request to receive the Google's Data of the user. This request includes the Google Code received into the step 5.  
+	07. [GOOGLE > Our Back End]- PASSPORT 
+		- Google, with the Google Code received, will retrieve the Use's Data into its database and send it to Our Back End. 
+	
+	08. [Our Back End]
+		- Our Back End, with the User's Google's Data, will persist these informations into our Database.
+	
+	09. [Our Back End]
+		- Our Back End will also Set the User ID (from Google) into the Cookies.
+
+	10. [Our Back End > Our Front End]
+		- Our Back End will send the Google Authentication response to Our Front End. It can be positive or negative, keep it in mind.
+
+	11. [Our Front End > Our Back End]
+		- Once a time our application already have the User ID (from Google), setted into the step 09, correctly configured into the Cookies, ALL OTHER REQUESTS WILL USE THIS ID AS A AUTHENTICATION.
+

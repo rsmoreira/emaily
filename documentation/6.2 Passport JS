@@ -1,0 +1,141 @@
+Passport JS
+
+There are only two components you will need to remember about Passport JS components/libraries:
+
+
+Obs.: 	1. If you do not have any folder/file mentioned into this documentation means that you need to create it.
+		2. The files created by this documentaion, needs to be created into the index.js file.
+
+
+	> Passport
+		It is the library responsible to handle the authentication
+
+	> Passport Strategies
+		Passport allows you to login at any specific Site that implements the OAuth authenticantion flow, such as Google, Twitter, Facebook, Github, etc. 
+
+	1. Intalling Passport JS and Google Strategy 
+
+		> Go to your terminal and type:
+
+			$ npm install --save passport passport-google-oauth20
+
+	2. Configuring Passport
+
+		At your /services/passport.js file do the following:
+
+		> Import library and Strategy
+
+			_. const passport = require('passport');
+			_. const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+		> Configure the Passport with the Google Strategy
+
+			_. passport.use(new GoogleStrategy());	
+
+
+	3. Configuring the App to be able to send authentication requests to Google
+
+		> Go to http://console.developers.google.com/
+
+		> After you have loged in, create a New Project. We will create one named 'Node Google OAuth Raw Project'
+
+		> After your project have been created, select it.
+
+		> Then enable the Google API to be able to handle OAuth 
+
+			1. Click on "Enable APIs and Services"
+
+			2. Search for "Google+ API" (yes! Google+ instead of OAuth ¬¬) and click on that.
+
+			3. Click on "Enable API"
+
+		> Configuring the OAuth Credentials
+
+			1. After it has been enabled, go to Credentials menu, click on "Create Credentials" and into the oppened menu, click on the "OAuth client ID".
+
+			2. After "OAuth client ID" has already been enabled, click on the "Configure consent screen", and:
+
+				> Configure the "Product name shown to users", click on save
+
+				> As Application Type, select "Web Application", and on its configurations do the following:
+
+					> On Restrictions/Authorized JavaScript origins, add:
+
+						http://localhost:5000
+
+						obs.: the same port you have configured into your application.
+
+					> On Restrictions/Authorized redirect URIs, add:
+
+						http://localhost:5000/auth/google/callback
+
+					> Click on Create
+
+				> A popup will be shown with the ClientID and the ClientSecret, copy and save them into a secure local.						
+					We have saved the these Ids into /config/dev.js (it wasn't commited, you must create it). 
+
+					TAKE CARE TO NEVER COMMIT YOUR CLIENT SECRET ID!!! 
+
+					So add dev.js to your .ignore file.
+
+					You always will be able to get your Client ID and your Client Secret again on http://console.developers.google.com/.
+
+		> Configuring our code to use Google OAuth
+
+			1. Open our /services/passport.js file again and:
+
+				> Import the configured keys file /config/keys.js
+
+				> Adjust the 'passport.use(...)' code with the following:
+
+					passport.use(
+					    new GoogleStrategy(
+					        {
+					            clientID: keys.googleClientID,
+					            clientSecret: keys.googleClientSecret,
+					            callbackURL: '/auth/google/callback'
+					        },
+					        accessToken => {
+					            console.log(accessToken);
+					        }
+					    )
+					);
+
+					It will use our keys e configure the callback to receive the Google Token, sent back to the app after the requested grant access permition.
+
+				> Configure the ROUTE to make the passport authentication
+
+					Into /routes/authRoutes.js, after the code above, do the following:
+
+						app.get(
+						    '/auth/google', 
+						    passport.authenticate('google', {
+						        scope: ['profile', 'email']
+						    })
+						);
+
+		> Configuring the OAuth Credentials / Restrictions/Authorized redirect URIs
+
+			This configuration is needed it allow Google send the grants permition to our configured callback. 
+			Without this configuration, you will have an error like 
+				> 400. That’s an error.
+				> Error: redirect_uri_mismatch
+
+			> So, go back to your http://console.developers.google.com/
+			> Open the Credentials
+			> Add to Restrictions/ Authorized redirect URIs the path:
+				http://localhost:5000/auth/google/callback
+
+				Note that, /auth/google/callback is the same path configured at GoogleStrategy/callbackURL.
+
+		> Adding route to handle the google auth callback into our code
+
+			Go to the /routes/authRoutes.js and add the code below:
+
+				app.get(
+				    '/auth/google/callback',
+				    passport.authenticate('google')
+				);
+
+
+For more information about Passport JS, please visit http://www.passportjs.org/ and http://console.developers.google.com/ (Google+ API).

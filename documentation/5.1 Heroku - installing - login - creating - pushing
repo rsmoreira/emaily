@@ -1,0 +1,75 @@
+HEROKU
+
+    After you have crated your heroku repository you must to install it, login into it, create your heroku project and commit your project to heroku repository.
+
+    1. To install Heroku please visti the page below:
+
+        https://devcenter.heroku.com/articles/heroku-cli#download-and-install
+
+        To install it, run the below command into your command line (linux-ubuntu):
+
+        $ sudo snap install heroku --classic
+    
+        To check if you have correctly installed Heroku, so runs the following command at your command line:
+
+            $ heroku -v
+
+        As the answer, your command line will show you the Heroku version. Only after you have this answer, continue to the nest steps.
+
+    2. login into heroku
+
+        Into your command line, please execute the following command and enter the e-mail and the password used to create your Heroku repository
+
+            $ heroku login
+
+    3. creating your remote project and repository at Heroku
+
+        Again, at your command line, go the root folder of your project, that means, the folder with your index.js file, we have seen how to create it a few steps ago. Then, use the command below to create your project:
+
+            $ heroku create
+
+        Heroku will create a project into your local space and will return 2 address to you:
+
+            ex.: https://secure-temple-12612.herokuapp.com/ | https://git.heroku.com/secure-temple-12612.git
+
+        The first one is the path that will be used to access your app from the browser and the second is the repository, where you will need to commit your project. 
+
+    4. Deploying your project to Heroku
+
+        To deploy your projec to heroku, copy the second link sent to you after you have ran 'heroku create' and execute the follow command at your command line:
+
+        (Remenber, you must have git already installed at your computer)
+
+            $ git remote add heroku https://git.heroku.com/secure-temple-12612.git
+
+        It will ADD a new remote repository to your already created git repository. So, you will be able to commit to the both repositories.
+
+    5. Sending your code to Heroku
+
+        To send your code to the Heroku repository, just execute the following:
+
+            $ git push heroku master
+
+        It will send your project to heroku, and heroku will install your project and its dependencies as expected.
+
+        PAY ATENTION: 
+
+            >>> Your package.json and your starter js file (index.js) must be at the root of your folder!
+    
+    6. Checking your application through the World-Wide-Web!
+
+        To do that, just run:
+
+            $ heroku open
+
+        It will open your default browser using the path created by heroku to access your app through the WWW.
+
+    7. Checking logs
+
+        To check the logs, just run:
+
+            $ heroku logs
+    
+
+
+

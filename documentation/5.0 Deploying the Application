@@ -1,0 +1,65 @@
+This project will be deployed into Heroku.
+
+Heroku is a Cloud Application Server platform. On Heroku you can easily deploy applications built in Javascript (as Node), PHP, Ruby, Java, Python, Go, Scala, Clojure, etc, and make anyone able to access your code. 
+
+And the better, it is free! Ok, not everything. Whatever, it is good!
+
+Just remenbering: it is similar (si-mi-lar) to AWS.
+
+https://www.heroku.com/
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+> THE DYNAMIC PORT BINDING
+
+    The heroku will tell you which port your project will need to be listening.
+
+    When heroku runs your project it has the habilit to inject environment variables in it. 
+
+    This configuration is made into our /server/index.js file:
+
+        > const PORT = process.env.PORT || 5000;
+        > app.listen(PORT);   
+
+    So, when in production, running on Heroku, process.env.PORT will be configured and it will be used. But when running locally, the PORT const will be configured with 5000.
+
+> DEFINING THE NODE VERSION TO BE USED BY Heroku
+
+    We need to tell HEROKU which node version we are using.
+
+    This configuration is made into our /server/package.json file:
+
+        ... 
+        "engines": {
+            "node": "8.6.0",
+            "npm": "5.8.0"
+        },
+        ...
+
+    You can check your Node and Npm versions running into your command line:
+
+        .$ node -v
+        .$ npm -v 
+
+> DEFINING IN HEROKU OUR START SCRIPT
+
+    It's needed to tell to Heroku how it will execute our project. 
+
+    To do that, go to the /server/package.json file and type the following into the "scripts" area:
+
+        ...
+        "scripts": {
+            "start": "node index.js"
+        }
+
+> ADDING A .ignore FILE TO AVOID SENDING UNNECESSARY FILES TO Heroku
+
+    If you, like me, have created your projects into github, there is an option where you can choose to generate a .ignore file. If you didn't created this project there, do the following:
+
+        > Into the root directory create a file named '.ignore'
+
+        > Opens this file and add the following:
+
+            node_modules 
+
+        It will prevent you sending the libraries downloaded locally and will pass the responsibility to download this to Heroku.
