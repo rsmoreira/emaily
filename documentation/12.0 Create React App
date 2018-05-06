@@ -1,0 +1,66 @@
+Create React App
+
+	https://github.com/facebook/create-react-app
+
+	It is a tool that helps you to create react apps. So, you will need to install the tool before to start creating react apps with it. 
+
+
+	Installing the toll
+
+		$ sudo npm install -g create-react-app
+
+	Creating an app
+
+		 Into the root of your project execute the following command:
+
+		 $ create-react-app client
+
+	Starting your recently created React App
+
+		Navigate to the client folder and execute the following command
+
+		$ npm start
+
+		Then, opne your browser on http://localhost:3000 and voiala
+
+	Client vs Server servers
+
+		Right now we have two servers running, our backend (under the root folder, listening to 5000 port) and our new frontend server (the React App recently created, listening to the port 3000). 
+
+		To get the both servers running together you can run both in separate terminals like:
+
+			Terminal_1: 
+				Execute the following command under client folder
+
+					$  npm start
+
+			Terminal_2:
+				Execute the following command under the root folder (/)
+
+					$ npm run dev
+
+		CONCURRENTLY
+
+			install:
+
+				$ npm install --save concurrently
+
+			Otherwise way you cat get it running through the package "concurrently". The package "concurrently" gives you the ability to have two different servers running under the same command.
+
+			To do that, update the scripts area of your package.json, from the root folder with the following:
+
+				"scripts": {
+					"start": "node index.js",
+					"server": "nodemon index.js",
+					"client": "npm run start --prefix client",
+					"dev": "concurrently \"npm run server\" \"npm run client\""
+				}
+
+			So, to get the both servers running together, into the terminal, from the root folder, execute:
+
+				$ npm run dev 			
+
+
+
+
+
