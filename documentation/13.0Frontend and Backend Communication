@@ -1,0 +1,19 @@
+Frontend and Backend Communication
+
+[How our frontend will call routes from our backend]
+
+Our architecture was build with front end and back end being deployed in different ports. That means, when in Dev environment our backend is on http://localhost:5000 and our frontend is being deployed on http://localhost:3000. 
+
+So, when you are into the front end js files, you can't call the routes of the back end just putting the relative path, because as we have said, you are into a different root. 
+
+To fix it, add the following to your Front End's package.json:
+
+	"proxy": {
+	    "/auth/google": {
+	      "target": "http://localhost:5000"
+	    }
+	 },
+
+Probably, the first thing you will try to access is the /auth/google, so don't forget to fix the Console Google Developers' Credentials, adding the http://localhost:3000/auth/google/callback into the 'Authorized redirect URIs'.
+
+It is just for development environment.
