@@ -35,7 +35,7 @@ passport.use(
             callbackURL: '/auth/google/callback',
             proxy: true
         },
-        (accessToken, refreshToken, profile, done) => {
+        async (accessToken, refreshToken, profile, done) => {
             /**
              * This is the callback function called after 
              * Google have validated with the user through 
@@ -54,16 +54,14 @@ passport.use(
              *  argument (the error first argument) and the created 
              *  user or the retrieved used, if it is the case.
              */
-            User.findOne({ googleId : profile.id })
-                .then((existingUser) => {
-                    if (existingUser) {
-                        done(null, existingUser);
-                    } else {
-                        new User({ googleId : profile.id })
-                            .save()
-                            .then(user => done(null, user));
-                    }
-                });
+            
+            let user = await User.findOne({googleId: profile.id});
+            if (user) {
+               return done(null, user);
+            } 
+
+            user = await new User({googleId:profile.id}).save();
+            done(null, user);
         }
     )
 );
