@@ -1,0 +1,13 @@
+Client React Setup
+
+	When we've created the client side with React strutcture, a bunch of files were created as well. 
+	So, Into your client directory, do the follow steps below. 
+	
+		Into client/src directory, delete all files, except for registerServiceWorker.js
+
+		Then, install Redux, React Redux and React Router into your client (front end).
+
+		> $ npm install --save redux react-redux react-router-dom 
+
+
+	
