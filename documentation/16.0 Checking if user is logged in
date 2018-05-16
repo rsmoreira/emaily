@@ -1,0 +1,99 @@
+Checking if user is logged in
+
+
+	Basically, our App component will make an Ajax Request through an Action Creator to our back end, specifically to '/api/current_user' (on routes/authRoutes.js), and according with the response will determine if the user whether or not logged in.
+
+	Dependecies:
+
+		AXIOS 
+			
+			Used to make ajax requests.
+		
+		REDUX-THUNK 
+			
+			Redux-Thunk is the most popular middleware used to handle async Actions in Redux.
+
+			Used to give you access directly to the Dispatch Function. 
+
+			On the Redux Normal Flow (16.2 Redux Flow (normal flow).pdf), 
+				> A REACT COMPONENT calls an ACTION CREATOR. 
+				> The ACTION CREATOR always returns an ACTION. 
+				> This ACTION is sent to its different REDUCERS, which update its corresponding STATE into the STORE. 
+				> As the REACT COMPONENT has its components directly linked to the STATES into the STORE, these components into the REACT COMPONENT is updated as well. 
+
+			The Redux Thunk is used to break the flow, so instead of an ACTION CREATOR return immediately an ACTION, AN ACTION CREATOR WILL PRODUCES AN ACTION AND WILL PASS IT TO THE DISPATCH FUNCTION. 
+
+			Into the 'normal flow', when we've said that the 'ACTION is sent to its different REDUCERS', at realy it is also a Dispatch Function working on this distribuition as well, HOWEVER Redux-Thunk gives you access directly to the Dispatch Function.
+
+
+	Installing dependencies:
+
+		From the client directory
+
+		$ npm install --save axios redux-thunk
+
+
+	Hooking up Redux-Thunk to the createStore as a Middleware
+
+		On client/index.js file, import redux-thunk and hook it up on the createStore.
+
+			... 
+			import reduxThunk from 'redux-thunk';
+			...
+
+			const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
+			...
+
+
+
+	The Action Creator
+
+		Here, using axios, is called the backend's method /api/current_user, that returns the user if it are correctly logged id. 
+
+		On client/src/actions 
+
+			index.js
+				import axios from 'axios';
+				import { FETCH_USER } from './types';
+
+				export const fetchUser = () => {
+				    return function (dispatch) {
+				        axios
+				            .get('/api/current_user')
+				            .then(
+				                res => dispatch({ type: FETCH_USER, payload: res })
+				            );
+				    };
+				};
+
+			types.js
+				export const FETCH_USER = 'fetch_user';
+
+		Update the /client/src/components to call fetchUser with the following:
+
+			import React, { Component } from 'react';
+			...
+			// connect gives you the ability to call actions creators.
+			import { connect } from 'react-redux';
+			import * as actions from '../actions';
+			...
+			class App extends Component {
+			    componentDidMount() {
+			        this.props.fetchUser();
+			    }
+
+			    render() {
+
+			    }
+			};
+
+			export default connect(null, actions)(App);
+
+
+	UPDATE THE PROXY
+		
+		DON'T FORGET, we are making a request from our frontend to our backend, so don't forget to add the /api/current_user to the package.json, updating our proxy. 
+
+			"/api/*": {
+			  "target": "http://localhost:5000"
+			}

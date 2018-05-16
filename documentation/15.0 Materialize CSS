@@ -1,0 +1,66 @@
+Materialize CSS
+
+	https://materializecss.com
+
+	Install
+
+		Into the 'client' directory
+
+		$ npm install --save materialize-css@next
+
+	Hooking up with Materialize CSS
+
+		Import materialize.min.css file into the project's structure.
+
+			> <project_root_folder>/client/node_modules/materialize-css/dist/css/materialize.min.css
+
+		Into your client/index.js file, as the first line import the materialize.min.css:
+
+			import 'materialize-css/dist/css/materialize.min.css';
+
+
+	Header 
+
+		Here is just an example of using Materialize CSS.
+		Inside your /client/components directory, create an file called Header.js and add this content to it:
+
+			import React, { Component } from 'react';
+
+			class Header extends Component {
+			    render() {
+			        return(
+			            <nav>
+			                <div className="nav-wrapper">
+			                
+			                    <a href="/" className="left brand-logo">Emaily</a>
+			                
+			                    <ul id="nav-mobile" className="right">
+			                        <li><a href="/auth/google">Login With Google</a></li>
+			                    </ul>
+			                
+			                </div>
+			            </nav>
+			        );
+			    }
+			}
+
+			export default Header;		
+
+		Import this component into the /client/components/App.js, and use it into the App component.
+
+			const Header = () => <h2>Header</h2>;
+			...
+			    render() {
+			        return (
+			            <div className="container">
+			                <BrowserRouter>
+			                    <div>
+			                        <Header /> // HERE IS
+			                        <Route exact path="/" component={ Landing } />
+			                        <Route exact path="/surveys" component={ Dashboard } />
+			                        <Route exact path="/surveys/new" component={ SurveyNew } />
+			                    </div>
+			                </BrowserRouter>
+			            </div>
+			        );
+			    }
