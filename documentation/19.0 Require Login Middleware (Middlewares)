@@ -1,0 +1,50 @@
+Check user logged with a Middleware
+
+Here we will be creating a Middleware that will intercept requests mades for SPECIFIC routes, to check if the user is logged in. 
+
+So, this Middleware will be configured to intercept just some specific routes. Not every route must be reach by this middleware.
+
+Or middleware to check if the user is logged in was created on /middlewares/requireLogin.js. 
+
+
+	What is a middleware?
+		
+		A middleware has the ability to intercept requests, make some checking or update this request, before returning it or sending it to the destiny (the next middleware, or to the api route). 
+ 	
+ 	For instance:
+ 		
+ 		The requireLogin.js is checking if the user is logged in. 
+		So, our middleware will intercept our request. It will check if the user is correctly logged in, and:
+ 			
+ 		>	if the user is not logged in, it will return it with an 
+         	appropriated error (res).
+ 		>   or, if the user is logged in, it will allow the user to 
+ 		    continue with the request (next).
+
+
+ 		    Here is our code on requireLogin.js:
+
+			module.exports = (req, res, next) => {
+			    if (!req.user) {
+			        return res.status(401).send({ error: 'You must log in!' });
+			    }
+
+			    next();
+			};
+
+	Applying middlewares just for some routes:
+
+		For this example, we are interested to add this middleware for for the /api/stripe route request. 
+
+		So, directly, into your route file, in our case, into the billingRoutes.js update the request handler as the following:
+
+			// Take a look that, the request handler will receive our middleware as a second argument.
+			...
+			const requireLogin = require('../middlewares/requireLogin');
+			...
+			app.post('/api/stripe', requireLogin, async (req, res) => {
+			...
+
+		Into the request handler you can have how many middlewares you must. All of them must be between the route name and the function of the request:
+
+			app.post('/api/stripe', middleware01, middleware02, middleware03, middleware04, ... , middleware134, async (req, res) => {

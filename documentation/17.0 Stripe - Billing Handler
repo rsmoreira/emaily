@@ -1,0 +1,139 @@
+Stripe - Billing Handler
+
+	It's a payment processor. 
+
+	It help us to process payments comming from credit cards giving us all the sercurity needed.  
+
+	The Stripe has a flow, where you never touchs the credit card data and don't needs to concern about the security. Stripe does everything to you.
+
+	Stripe gives you an entire flow. Through a Stripe's native form, it collects the credit card number data and send it directly to the Stripe Billing Processing (you do not touch the credit card, or any related data, into your backend). Stripe process this Credit Card number, and returns a token. Our app send this token to our backend and our backend, through this token, confirms with Stripe if the payment was successfuly processed. Then, the credits is added to the user account. 
+
+	You can take a look at the entire Stripe flow diagram at 17.1 Stripe - Billing Handler - Flow.pdf.
+
+	> Creating an Account on Stripe
+
+		On https://stripe.com/ create a new account.
+
+		After it, when you are logged in, you will be on the Dashboard. Initially, you will have a test account, that will allow you to test fake credit payments. 
+
+		After you have tested your account your activate it clicking on "Activate your account". Then your app will be able to receive real credit card payments.
+
+	> Stripe API Key
+
+		Stripe gives you a Published Key, that will be used into our FrondEnd, and a Secret Key to be used by our back end. 
+
+		It can be accessed from the Stripe's Dashboard on the Developers/API Keys menu.
+
+	> Installing Stripe into our APP
+
+		>> Installing the FrontEnd plugin Stripe Checkout React
+
+			This is the Stripe's FrontEnd Form to be used to collect the Credit Card number from our users.
+
+			So, lets install https://github.com/azmenak/react-stripe-checkout...
+
+			From your 'client' directory
+
+				$ npm install --save react-stripe-checkout
+
+	> Configuring Stripe
+
+		>> Configuring the BackEnd key (Publishable Key / Secret Key)
+
+			Into your your javascript file that keeps your dev keys (/config/dev.js), create two new entries for the Publisheable Key and for the Secret Key).
+
+				...
+				    stripePublishableKey : 'pk_test_vvcEgITA1t8XDVFYSzysQt42',
+   	 				stripeSecretKey : 'sk_test_fHelY0lYOt1WkpeCNOHHGhuH'
+				...
+
+			Do the same thing for your production javascript file that keeps your keys (/config/prd.js)
+
+				...
+					stripePublishableKey : process.env.STRIPE_PUBLISHABLE_KEY,
+					stripeSecretKey : process.env.STRIPE_SECRET_KEY 
+				...
+
+				HEROKU For the production keys, you will need to configure it into the Heroku.
+
+					So, into your Heroku's Dashboard App, go to Settings and Reveal Config Vars, and add the both keys above.
+					It is just a test project, so we will be using the test keys.
+
+
+		>> Configuring the FrontEnd key (Publishable Key)
+
+			>> For further information:
+				https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables
+				If the link above doesn't work, search for 'Create React App' into the google and into the documentation, look for 'Environment Variables'.
+
+			>> FrontEnd Configuration Keys 
+
+				Into the 'client' directory, create the files:
+
+					> .env.development 
+					> .env.production
+
+					Obs.: the file names must have the exact names above, starting with '.env.' and finishing with 'development' and 'production'.
+
+				Defining the keys
+					Obs.: 
+						1. All keys must start with 'REACT_APP_';
+						2. Pay atention, you will just put the Stripe publishable key into the front end.
+
+					Into the files put the following:
+
+						REACT_APP_STRIPE_KEY=pk_test_vvcEgITA1t8XDVFYSzysQt42
+
+
+	> Using Stripe on Front End
+
+		/client/src/components/Payments.js
+
+			Here we will be adding the Spripe Component named StripeCheckout. It is the Spripe form, to handle the credit cards data. 
+
+			Here we will also be calling the 'handleToken' Action Creator, that will be calling our BackEnd rest API '/api/stripe' through post method, passing our token. This backend Rest API  will confirm the transaction on the Spripe (with the token) and will add the credits to the user. 
+
+		/client/src/components/Header.js
+
+			Here we just have hooked up the Payments component to our header component.
+		
+		/client/src/actions/index.js (handleToken)
+
+			The method handleToken, through rest post, calls the API Method '/api/stripe', passing the token received from the Stripe when you've submitted the Stripe form. 
+
+	> Back End
+
+		To have the Back End working with Stripe, we will be using a library to help us to handler the Stripe's token, comming from the Front End, and send it to the Stripe's token verification.
+
+		To install this library, go to https://npmjs.com , look for 'stripe' and access the 'Stripe API wrapper' (https://www.npmjs.com/package/stripe). 
+
+			$ npm install --save stripe
+
+		Stripe API wrapper
+
+			With Stripe API wrapper, we will be working with the 'Charge' object (https://stripe.com/docs/api/node#charges).
+
+			Creating the Charge Object
+
+				It will get the Token, already created by Spripe Checkout on the Front End, and will send to the Spripe to make the validation. 
+
+					´´´´´´
+						Here is a parentesis:
+
+							When you make post requests sending a payload request to your Back End, ExpressJs doesn't default pars the request payload. 
+							You must to install a library to do it. 
+							It is done by 'body-parser'.
+
+							Take a look at '18.0 Body Parser - Handling resquest payload into the Back End'.
+
+					´´´´´´
+
+				The Charge Object will be done into the billingRoutes.js. Take a look there.
+
+
+
+
+
+	> A second choice
+
+		As a second choice, your can check https://recurly.com/. 

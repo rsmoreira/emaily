@@ -1,0 +1,30 @@
+Body Parser - Handling request payload into the Back End
+
+	When you make post requests, sending a payload request to your Back End, ExpressJs doesn't default pars the request payload. 
+	
+	You must to install a library to do it. 
+	
+	It is done by 'body-parser'. 
+
+	It is a middleware library.
+
+	Installing 
+
+		$ npm install --save body-parser
+
+	Configuring 
+
+		Into the Server 'index.js' file, import and configure it as the follow. 
+
+		Obs.: as it is a middleware library, it must be configured into the 'app.use' function.
+
+		...
+		const bodyParser = require('body-parser'); 
+		...
+		app.use(bodyParser.json());
+		... 
+
+
+		DONE!
+
+	After you have it configured, every payload request (put/patch/post request) will be intercepted by this middleware, the body will be parsed and the result will be put into the 'prop.body' property of the incomming request object.
