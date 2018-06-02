@@ -1,0 +1,71 @@
+Building the Project
+
+	Building the Client side (frontend assets)
+
+		Into the 'client' directory build its content to generate the production assets as following:
+
+			$ npm run build
+
+		It will build the frontend assets into the /client/build directory.
+
+		It's needed to build your application every time you change something into the front end code and you will deploy.
+
+		To avoid t
+
+
+	Concerns about requesting routes into the built Application. There are three kind of requests where the express will need to handle:
+
+		> Back End routes :: routes that the express is really responsible for, like /api/stripe
+
+		> Front End routes :: routes built on the React Router, example /surveys. Here, the Express Server will be sending the request to the index.html.
+
+		> Requests trying to access specific assets, like main.js file. Here, the Express Server will be sending the request to the main.js file.
+
+	
+	Configuring the Express Server to recognize all of these kind of requests, and make it able to handle all of them.
+
+		Into the index.js file of the root of our project, add the following lines after all backend routes we've configured:
+
+			require('./routes/authRoutes')(app);
+			require('./routes/billingRoutes')(app);
+
+			if (process.env.NODE_ENV === 'production') {
+			    // Express will serve up production assets
+			    // like our main.js file or main.css file.
+			    app.use(express.static('client/build'));
+
+			    // Express wil serve up the index.html file
+			    // when it doesn't recognize the route
+			    const path = require('path');
+			    app.get('*', (req, res) => {
+			        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+			    });
+			}
+
+	Pushing and Building the project at Heroku
+
+		Reference: https://devcenter.heroku.com/articles/nodejs-support#customizing-the-build-process
+
+		All the configuration below will be done into the package.json on the root of this project (server package.json).
+
+		> Push to Heroku - 
+			It is already being done
+		
+		> Heroku installs server dependencies - 
+			It is already being done
+		
+		> Through "heroku-postbuild"
+			* We tell Heroku to install client dependencies (npm install --prefix client)
+			* We tell Heroku to run "npm run build" (npm run build --prefix client)
+
+			Here we will tell heroku to install all the npm modules. The server dependecies and the client dependencies.
+			Then, we will tell heroku to build the client side. 
+			
+			Into the package.json, on the 'scripts' area, after the 'dev' command, add the following:
+
+				"heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+
+
+		
+
+
