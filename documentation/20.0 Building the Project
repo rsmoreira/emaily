@@ -66,6 +66,16 @@ Building the Project
 				"heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
 
 
+	Deploying to Heroku
+
+		It still the same as before. 
+
+		$ git status
+		$ git add .
+		$ git commit -m "message"
+		$ git push 	(Here we are pushing to Github)
+		$ git push heroku master (it will push and run all the package.json#scripts command on heroku)
+		$ heroku open (it will open your project into the browser.)
 		
 
 
