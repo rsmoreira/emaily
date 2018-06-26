@@ -1,0 +1,16 @@
+REDUX FORM
+
+It will help us to validate any field typed by user and will make us able to use the content of these fields into any other forms.
+
+https://redux-form.com
+
+Install
+
+	It must be installed into the client side. 
+	So go to your client directory and type:
+
+		$ npm install --save redux-form
+
+Documentation
+
+	https://redux-form.com/7.4.2/docs/gettingstarted.md/
