@@ -1,0 +1,54 @@
+A Webhook allows an internet server, like our Sendgrid (our e-mail delivery service), to make requests to our localhost server. 
+
+It will be used to sinalize our services that someone, that have received our survey, have clicked on YES or NO button, answering our survey. 
+
+You won't have this kind of problem when running the application from the production environment. 
+
+To do that we will use localtunnel
+
+	> https://localtunnel.github.io/www
+
+The architecture will work like this:
+	
+	[PRODUCTION ENVIRONMENT]
+	> Sendgrid will call, every 30 seconds, a service deployed at our service. 
+
+	[DEVELOPMENT ENVIRONMENT - using webhook/localtunnel]
+	> Sendgrid will call, every 30 seconds, a service available at webhookhelper.localtunnel.com.
+
+	> webhookhelper.localtunnel.com will be configured to connect to our Localtunnel Server on our computer
+
+	> The Localtunnel Server on our computer will call our service deployed at localhost:5000
+
+Installing 
+
+	From the root server path:
+
+		$ npm install --save localtunnel
+
+Configuring
+
+	On the package.json, at the server root path, on the "script" section
+
+	Configuring local tunnel at our Local Server
+
+		Just add a new like as below:
+
+		"scripts" : {
+			... ,
+			"webhook": "lt -p 5000 -s rsmoreira-webhook-localtunnel"
+		}
+
+	Running the localtunnel every time our server is started
+
+		Still, on the scripts section, update the "dev" command as following:
+		(\"npm run webhook\")
+		
+		"scripts" : {
+			... ,
+			"dev": "concurrently \"npm run server\" \"npm run client\" \"npm run webhook\"",
+			...
+		}
+
+	
+
